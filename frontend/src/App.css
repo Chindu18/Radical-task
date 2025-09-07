@@ -1,0 +1,9 @@
+.admin-page{
+    display: flex;
+}
+.routes-path{
+    width: 72%;
+    height: 100vh;
+   padding-top: 43px;
+   padding-left: 28px;
+}

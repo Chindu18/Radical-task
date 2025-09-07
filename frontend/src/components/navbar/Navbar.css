@@ -1,0 +1,40 @@
+.navbar{
+    width: 100vw;
+    height: 11vh;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid #dedede;
+}
+.rs-tech{
+    width: 21.5%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    border-right: 2px solid #dedede;
+}
+.rs-tech h1{
+    margin-left: 40px;
+    color: #0085ff;
+    font-size: 29px;
+}
+.nav-items{
+    width: 78.5%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.nav-items ul{
+    display: flex;
+    flex-direction: row;
+    margin-right: 40px;
+    gap: 12px;
+}
+
+.nav-items ul li{
+    background-color: #0085ff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}

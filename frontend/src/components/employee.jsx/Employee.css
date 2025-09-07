@@ -1,0 +1,87 @@
+.employee-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.search-container{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: end;
+}
+.search-container input{
+    width: 250px;
+    height: 50px;
+    border-radius: 7px;
+    padding: 0 10px;
+    outline: none;
+    border: 1px solid #dedede;
+}
+.search-box{
+    position: relative;
+}
+.search-container span {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 18px;
+
+}
+.search-container .button{
+    width: 220px;
+    height: 50px;
+    border-radius: 7px;
+    padding: 0 15px; 
+    font-size: 16px;
+    color: white;
+    background-color: #0886fa;  
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; 
+}
+.search-container .button:hover{
+   background-color:#0886fac9 
+}
+.search-container .button i{
+    font-size: 18px;
+    margin-right: 10px;
+}
+.search-container input::placeholder{
+    font-size: 17px;
+    padding: 20px 30px;
+    font-weight: 300;
+}
+
+
+
+
+/* for employee table creation */
+.employee-table{
+    width: 100%;
+    padding: 0px 10px;
+    margin-top: 30px;
+    border: 1px solid #dedede;
+    border-radius: 7px;
+    text-align: left;
+    border-spacing: 0px 20px;
+
+}
+.employee-table thead tr th{
+    font-size: 17px;
+    font-weight: 300;
+    color: #656565;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dedede;
+}
+ .employee-table tbody tr td{
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 20px;
+    color: #16151c;
+    font-size: 17px;
+}
