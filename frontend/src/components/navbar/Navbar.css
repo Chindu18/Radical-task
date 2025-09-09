@@ -38,3 +38,56 @@
     width: 40px;
     height: 40px;
 }
+
+
+/* for responsive design */
+@media (max-width: 575px) {
+.rs-tech{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.rs-tech h1{
+    font-size: 14px;
+    margin-left: 0px;
+}
+.nav-items ul li{
+    background-color: #0085ff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}  
+}
+@media (min-width: 576px) and (max-width: 767px) {
+    .rs-tech{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+    .rs-tech h1{
+        font-size: 20px;
+        margin-left: 0;
+    }
+    .nav-items ul li{
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+    }  
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+    .rs-tech{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    .rs-tech h1{
+        font-size: 28px;
+        margin-left: 0px;
+    }
+    .nav-items ul li{
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+    }  
+}
+

@@ -29,3 +29,22 @@
      background-color: #0085ff;
      border-radius: 0 30px 30px 0;
 }
+
+
+/* responsive design */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .sidebar ul li{
+    font-size: 13px;
+}
+}
+@media (min-width: 576px) and (max-width: 767px) {
+ .sidebar ul li p{
+ display: none;
+}
+}
+@media (max-width: 575px) {
+.sidebar ul li p{
+ display: none;
+}
+}

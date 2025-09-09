@@ -92,3 +92,21 @@
    padding: 80px 0 !important;
    border: none !important;
 }
+
+@media (min-width: 768px) and (max-width: 991px) {
+   .search-container .button{
+    width: 180px;
+    height: 40px;
+    border-radius: 7px;
+    padding: 0 15px; 
+    font-size: 13px;
+    color: rgb(209, 25, 25);
+    background-color: #0886fa;  
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; 
+}
+}
