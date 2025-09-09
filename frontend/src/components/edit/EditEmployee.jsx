@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./edit.css"; 
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import img from '../../assests/img.png'
 
 const EditEmployee = () => {
   const navigate = useNavigate();
   const { employeeId } = useParams(); 
+  const [image,setimage]=useState('')
 
   const [formData, setFormData] = useState({
     employee_name: "",
@@ -82,29 +84,25 @@ const EditEmployee = () => {
 
       <div className="form-data">
         <div className="file-upload">
-          <input
-            type="file"
-            name="profile_url"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              if (file) {
-                setPreview(URL.createObjectURL(file));
-                setFormData({
-                  ...formData,
-                  profile_url: file, // keep file object
-                });
-              }
-            }}
-          />
+          <label htmlFor="img"><img className="upload-img" src={image?URL.createObjectURL(image):img} alt="" /></label>
+                   <input
+                   id="img"
+                     type="file"
+                     name="profile_url"
+                     onChange={(e) => {
+                   const file = e.target.files[0];
+                   if (file) {
+                     setimage(file); 
+                     console.log(file)
+                     setFormData({
+                       ...formData,
+                       profile_url: file, 
+                     });
+                   }
+                 }}
+                     hidden
+                   />
 
-          {(preview || formData.profile_url) && (
-            <img
-              src={preview || formData.profile_url}
-              alt="Preview"
-              style={{ width: "120px", height: "120px", objectFit: "cover" }}
-            />
-          )}
         </div>
 
         <form className="form" onSubmit={handleSubmit}>

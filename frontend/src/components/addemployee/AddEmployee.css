@@ -94,15 +94,26 @@
 }
 
 /* responsive */
-@media (min-width:997px) and (max-width:1119px){
+@media (min-width:1200px){
   .input-field {
-    width: 400px;
-  max-width: 100%;
+    width: 360px;
+  
+  height: 48px;
+  padding: 8px 10px;
+  border: 2px solid #dedede;
+  border-radius: 7px;  font-size: 14px;
+  outline: none;
+}
+}
+@media (min-width:997px) and (max-width:1219px){
+  .input-field {
+    width: 350px;
+    min-width: 300px;
+  
   height: 44px;
   padding: 7px 8px;
   border: 2px solid #dedede;
-  border-radius: 7px;
-  font-size: 14px;
+  border-radius: 7px;  font-size: 14px;
   outline: none;
 }
 

@@ -3,16 +3,16 @@ import './Employee.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 const Employee = () => {
   const navigate = useNavigate();
   const [employee, setEmployee] = useState([]);
+  const [deleteId, setDeleteId] = useState(null); // store the id to delete
+  const [showPopup, setShowPopup] = useState(false); // control popup
 
   useEffect(() => {
     fetchEmployees();
   }, []);
 
-  
   const fetchEmployees = async () => {
     try {
       const res = await axios.get('http://localhost:5000/api/showemployee'); 
@@ -24,25 +24,26 @@ const Employee = () => {
     }
   };
 
-  
   const show = (id) => {
     navigate(`/viewemployee/${id}`);
   };
 
-  const remove = async (id) => {
-    const confirmDelete = window.confirm("Do you want to delete this employee?");
-    if (!confirmDelete) return;
+  const handleDeleteClick = (id) => {
+    setDeleteId(id);
+    setShowPopup(true);
+  };
 
+  const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/deleteemployee/${id}`);
-      
-
+      await axios.delete(`http://localhost:5000/api/deleteemployee/${deleteId}`);
       alert("Employee deleted successfully");
-      fetchEmployees(); 
-
+      fetchEmployees();
     } catch (error) {
       console.error("Error deleting employee:", error);
       alert("Failed to delete employee");
+    } finally {
+      setShowPopup(false);
+      setDeleteId(null);
     }
   };
 
@@ -101,7 +102,7 @@ const Employee = () => {
                       <i onClick={() => navigate(`/editemployee/${emp.employee_id}`)} className="bi bi-pencil-square"></i>
                     </div>
                     <div>
-                      <i onClick={() => remove(emp.employee_id)} className="bi bi-trash3"></i>
+                      <i onClick={() => handleDeleteClick(emp.employee_id)} className="bi bi-trash3"></i>
                     </div>
                   </td>
                 </tr>
@@ -110,6 +111,17 @@ const Employee = () => {
           </tbody>
         </table>
       </div>
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <p>Do you want to delete this employee?</p>
+            <div className="popup-actions">
+              <button onClick={confirmDelete}>Yes</button>
+              <button onClick={() => setShowPopup(false)}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
