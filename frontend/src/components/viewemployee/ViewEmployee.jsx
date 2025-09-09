@@ -1,82 +1,87 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import "./ViewEmployee.css";
+import React, { useState, useEffect } from 'react';
+import './ViewEmployee.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const ViewEmployee = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); 
-  const [employee, setEmployee] = useState(null);
+  const { employeeId } = useParams();
+  const [employee, setEmployee] = useState({});
 
   useEffect(() => {
-    
     const fetchEmployee = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/employees/${id}`);
-        setEmployee(res.data);
+        const res = await axios.get(`http://localhost:5000/api/employee/${employeeId}`);
+        if (res.data.success) {
+          setEmployee(res.data.data);
+          console.log('suu')
+        }
       } catch (error) {
-        console.error("Error fetching employee details:", error);
+        console.error("Error fetching employee:", error);
       }
     };
-    fetchEmployee();
-  }, [id]);
 
-  if (!employee) {
-    return <p>Loading employee details...</p>;
-  }
+    fetchEmployee();
+  }, [employeeId]);
 
   return (
-    <div className="view-employee">
-      
+    <>
       <div className="heading">
-        <i onClick={() => navigate(-1)} className="bi bi-chevron-left"></i>
+        <i onClick={() => navigate("/")} className="bi bi-chevron-left"></i>
         <p>View Employee Details</p>
       </div>
 
-     
       <div className="sub-heading">
         <i className="bi bi-person-fill"></i>
         <p>Personal Information</p>
       </div>
 
-     
-      <div className="employee-card">
-        <div className="employee-img">
-          <img
-            src={employee.image || "https://via.placeholder.com/120"}
-            alt={employee.name}
-          />
+      <div className='information'>
+        <div className='image-container'>
+          <img src={employee.profile_url} alt="Profile" />
         </div>
 
-        <div className="employee-info">
-          <div className="info-row">
-            <p><strong>Name</strong></p>
-            <p>{employee.name}</p>
-            <p><strong>Employee ID</strong></p>
-            <p>{employee.employee_id}</p>
+        <div className='information-container'>
+          <div className='information-details'>
+            <p className='name'>Name</p>
+            <p className='value'>{employee.employee_name}</p>
           </div>
-
-          <div className="info-row">
-            <p><strong>Department</strong></p>
-            <p>{employee.department}</p>
-            <p><strong>Designation</strong></p>
-            <p>{employee.designation}</p>
+          <div className='information-details'>
+            <p className='name'>Employee Id</p>
+            <p className='value'>{employee.employee_id || 'N/A'}</p>
           </div>
+        </div>
 
-          <div className="info-row">
-            <p><strong>Project</strong></p>
-            <p>{employee.project}</p>
-            <p><strong>Type</strong></p>
-            <p>{employee.type}</p>
+        <div className='information-container'>
+          <div className='information-details'>
+            <p className='name'>Department</p>
+            <p className='value'>{employee.department || 'N/A'}</p>
           </div>
+          <div className='information-details'>
+            <p className='name'>Designation</p>
+            <p className='value'>{employee.designation || 'N/A'}</p>
+          </div>
+        </div>
 
-          <div className="info-row">
-            <p><strong>Status</strong></p>
-            <p>{employee.status}</p>
+        <div className='information-container'>
+          <div className='information-details'>
+            <p className='name'>Project</p>
+            <p className='value'>{employee.project || 'N/A'}</p>
+          </div>
+          <div className='information-details'>
+            <p className='name'>Type</p>
+            <p className='value'>{employee.work_type || 'N/A'}</p>
+          </div>
+        </div>
+
+        <div className='information-container'>
+          <div className='information-details'>
+            <p className='name'>Status</p>
+            <p className='value'>{employee.work_status || 'N/A'}</p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

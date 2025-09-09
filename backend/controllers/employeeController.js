@@ -28,7 +28,8 @@ const addemployee = async (req, res) => {
         const {employee_name, employee_id, department,
              designation, project, work_type, work_status
             }=req.body;
-            const profile_url=req.file.filename || "profile pic not uploaded";
+           const profile_url = req.body.profile_url || "profile pic not uploaded";
+
         const [rows]=await connection.execute(`INSERT INTO employees (employee_name, employee_id, department, designation, project, work_type, work_status, profile_url)  VALUES(?,?,?,?,?,?,?,?)`,
         [employee_name, employee_id, department,designation, project, work_type, work_status, profile_url])
         console.log(rows);
@@ -50,22 +51,31 @@ const addemployee = async (req, res) => {
 const updateemployee = async (req, res) => {
   try {
     const connection = await db();
-    const { employee_id } = req.params;
-    const { employee_name, department, designation, project, work_type, work_status } = req.body;
+    const oldEmployeeId = req.params.employee_id; // current ID in DB
+    const {
+      employee_id,
+      employee_name,
+      department,
+      designation,
+      project,
+      work_type,
+      work_status
+    } = req.body;
+
     const profile_url = req.file ? req.file.path : undefined;
 
-    let query = `UPDATE employees SET employee_name=?, department=?, designation=?, project=?, work_type=?, work_status=?`;
-    const params = [employee_name, department, designation, project, work_type, work_status];
+    // build query
+    let query = `UPDATE employees SET employee_name=?, department=?, designation=?, project=?, work_type=?, work_status=?, employee_id=?`;
+    const params = [employee_name, department, designation, project, work_type, work_status, employee_id];
 
     if (profile_url) {
-      query += `, profile_url=?`; 
+      query += `, profile_url=?`;
       params.push(profile_url);
     }
 
     query += ` WHERE employee_id=?`;
-    params.push(employee_id);
+    params.push(oldEmployeeId);
 
-  
     const [rows] = await connection.execute(query, params);
 
     res.status(200).json({
@@ -82,6 +92,7 @@ const updateemployee = async (req, res) => {
     });
   }
 };
+
 
 const deleteemployee = async (req, res) => {
   try {
@@ -109,4 +120,39 @@ const deleteemployee = async (req, res) => {
   }
 };
 
-export { showemployee, addemployee,updateemployee ,deleteemployee};
+
+
+const getEmployee = async (req, res) => {
+  try {
+    const connection = await db();
+    const { employee_id } = req.params;
+
+    const [rows] = await connection.execute(
+      `SELECT * FROM employees WHERE employee_id = ?`,
+      [employee_id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Employee not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: rows[0]
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching employee",
+      error: error.message
+    });
+  }
+};
+
+
+
+
+export { showemployee, addemployee,updateemployee ,deleteemployee,getEmployee};

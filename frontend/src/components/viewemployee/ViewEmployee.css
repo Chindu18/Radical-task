@@ -1,0 +1,26 @@
+.information-details{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+.information-details .name{
+    color: #909090;
+    font-weight: 200;
+}
+
+.information-container{
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    
+}
+.image-container{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: rebeccapurple;
+
+}

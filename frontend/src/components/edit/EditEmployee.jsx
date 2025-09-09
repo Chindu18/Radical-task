@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import "./AddEmployee.css";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import "./edit.css"; // you can rename to EditEmployee.css if needed
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-const AddEmployee = () => {
+const EditEmployee = () => {
   const navigate = useNavigate();
+  const { employeeId } = useParams(); 
 
   const [formData, setFormData] = useState({
     employee_name: "",
-    employee_id: "", // will be converted to number
+    employee_id: "", 
     department: "",
     designation: "",
     project: "",
@@ -17,31 +18,43 @@ const AddEmployee = () => {
     profile_url: "",
   });
 
-  const handleChange = (e) => {
-  let { name, value } = e.target;
-
-  if (name === "employee_id") {
-    value = value ? Number(value) : "";
-  }
-
-  setFormData({
-    ...formData,
-    [name]: value,
-  });
-};
-
-
+ 
   useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+    const fetchEmployee = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/employee/${employeeId}`);
+        if (res.data.success) {
+          setFormData(res.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching employee:", error);
+      }
+    };
+
+    fetchEmployee();
+  }, [employeeId]);
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+
+    if (name === "employee_id") {
+      value = value ? Number(value) : "";
+    }
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/addemployee", formData);
+
+      await axios.put(`http://localhost:5000/api/updateemployee/${employeeId}`, formData);
       navigate("/");
     } catch (error) {
-      console.log("Error while adding employee:", error);
+      console.log("Error while updating employee:", error);
     }
   };
 
@@ -49,7 +62,7 @@ const AddEmployee = () => {
     <div className="addemployee">
       <div className="heading">
         <i onClick={() => navigate("/")} className="bi bi-chevron-left"></i>
-        <p>Add New Employee</p>
+        <p>Edit Employee</p>
       </div>
 
       <div className="sub-heading">
@@ -194,7 +207,7 @@ const AddEmployee = () => {
               Cancel
             </button>
             <button type="submit" className="confirm">
-              Confirm
+              Update
             </button>
           </div>
         </form>
@@ -203,4 +216,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default EditEmployee;

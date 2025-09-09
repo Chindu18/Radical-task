@@ -5,6 +5,7 @@ import {Routes,Route} from 'react-router-dom'
 import Employee from './components/employee/Employee'
 import AddEmployee from './components/addemployee/AddEmployee'
 import ViewEmployee from './components/viewemployee/Viewemployee'
+import EditEmployee from './components/edit/EditEmployee'
 
 const App = () => {
   return (
@@ -16,7 +17,8 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Employee/>}/>
           <Route path='/addemployee' element={<AddEmployee/>}/>
-          <Route path='/viewemployee' element={<ViewEmployee/>}/>
+          <Route path='/viewemployee/:employeeId' element={<ViewEmployee/>}/>
+          <Route path='/editemployee/:employeeId' element={<EditEmployee/>}/>
         </Routes>
        </div>
       </div>

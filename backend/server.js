@@ -1,11 +1,12 @@
 import express from 'express';
 import {db} from './config/database.js';
 import employess from './routes/employee.js';
+import cors from 'cors';
 
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors());
 const PORT = process.env.Port  || 5000;
 
 //databse connection
