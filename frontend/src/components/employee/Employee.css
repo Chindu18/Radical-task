@@ -61,7 +61,7 @@
 
 
 
-/* for employee table creation */
+
 .employee-table{
     width: 100%;
     padding: 0px 10px;
@@ -80,8 +80,15 @@
     border-bottom: 1px solid #dedede;
 }
  .employee-table tbody tr td{
-    border-bottom: 1px solid #dedede;
-    padding-bottom: 20px;
+   
+    padding-left: 5px;
     color: #16151c;
     font-size: 17px;
+}
+.nodata{
+   font-size: 30px !important;
+   color: #16151c;
+   font-weight: 500;
+   padding: 80px 0 !important;
+   border: none !important;
 }
