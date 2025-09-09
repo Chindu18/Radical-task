@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./edit.css"; // you can rename to EditEmployee.css if needed
+import "./edit.css"; 
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -15,10 +15,11 @@ const EditEmployee = () => {
     project: "",
     work_type: "",
     work_status: "",
-    profile_url: "",
+    profile_url: "", // existing image URL from DB
   });
 
- 
+  const [preview, setPreview] = useState(null); // for newly uploaded image
+
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
@@ -36,11 +37,9 @@ const EditEmployee = () => {
 
   const handleChange = (e) => {
     let { name, value } = e.target;
-
     if (name === "employee_id") {
       value = value ? Number(value) : "";
     }
-
     setFormData({
       ...formData,
       [name]: value,
@@ -49,9 +48,20 @@ const EditEmployee = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
 
-      await axios.put(`http://localhost:5000/api/updateemployee/${employeeId}`, formData);
+    try {
+      // if uploading a file, use FormData
+      const data = new FormData();
+      Object.keys(formData).forEach((key) => {
+        data.append(key, formData[key]);
+      });
+
+      await axios.put(
+        `http://localhost:5000/api/updateemployee/${employeeId}`,
+        data,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
       navigate("/");
     } catch (error) {
       console.log("Error while updating employee:", error);
@@ -75,15 +85,25 @@ const EditEmployee = () => {
           <input
             type="file"
             name="profile_url"
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                profile_url: e.target.files[0]?.name,
-              })
-            }
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setPreview(URL.createObjectURL(file));
+                setFormData({
+                  ...formData,
+                  profile_url: file, // keep file object
+                });
+              }
+            }}
           />
-          {formData.profile_url && (
-            <img src={formData.profile_url} alt="Preview" />
+
+          {(preview || formData.profile_url) && (
+            <img
+              src={preview || formData.profile_url}
+              alt="Preview"
+              style={{ width: "120px", height: "120px", objectFit: "cover" }}
+            />
           )}
         </div>
 
@@ -123,9 +143,7 @@ const EditEmployee = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="" disabled>
-                  Select department
-                </option>
+                <option value="" disabled>Select department</option>
                 <option value="design">Design</option>
                 <option value="development">Development</option>
               </select>
@@ -139,9 +157,7 @@ const EditEmployee = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="" disabled>
-                  Select designation
-                </option>
+                <option value="" disabled>Select designation</option>
                 <option value="designer">Designer</option>
                 <option value="design_lead">Design Lead</option>
                 <option value="developer">Developer</option>
@@ -170,9 +186,7 @@ const EditEmployee = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="" disabled>
-                  Select work type
-                </option>
+                <option value="" disabled>Select work type</option>
                 <option value="office">Office</option>
                 <option value="remote">Remote</option>
               </select>
@@ -189,9 +203,7 @@ const EditEmployee = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="" disabled>
-                  Select work status
-                </option>
+                <option value="" disabled>Select work status</option>
                 <option value="permanent">Permanent</option>
                 <option value="intern">Intern</option>
               </select>

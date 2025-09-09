@@ -93,20 +93,127 @@
    border: none !important;
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (max-width: 991px) {
    .search-container .button{
-    width: 180px;
+    width: 140px;
+    height: 40px; 
+}
+.button p{
+  text-align: center;
+}
+.button i{
+    display: none;
+}
+
+
+.search-container input{
+    width: 140px;
     height: 40px;
     border-radius: 7px;
-    padding: 0 15px; 
-    font-size: 13px;
-    color: rgb(209, 25, 25);
-    background-color: #0886fa;  
-    outline: none;
-    border: none;
+  
+}
+.search-box{
+    position: relative;
+}
+.search-container span {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 18px;
+
+}
+}@media (max-width: 728px) {
+   .search-container .button{
+    width: 100px;
+    height: 30px; 
+}
+.button p{
+display: none;
+}
+.button i{
+    display:block;
+}
+
+
+.search-container input{
+    width: 100px;
+    height:30px;
+    border-radius: 7px;
+  
+}
+.search-box{
+    position: relative;
+}
+.search-container span {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 15px;
+
+}
+}
+@media (max-width: 555px) {
+  
+
+.employee-container{
+    h1{
+        font-size: 16px;
+    }
+}
+
+}
+
+@media (max-width: 378px) {
+   .search-container .button{
+    width: 50px;
+    height: 30px; 
+}
+.button p{
+display: none;
+}
+.button{
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer; 
+    justify-self: center;
 }
+.button i{
+    display:block;
+    font-size: 10px;
+
 }
+
+
+.search-container input{
+    width: 50px;
+    height:30px;
+    border-radius: 7px;
+  
+}
+
+}
+
+
+
+
+/* Wrapper to enable horizontal scroll */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scroll on mobile */
+}
+
+.employee-table {
+  width: 100%;
+  min-width: 800px; /* ensures columns don’t shrink too much */
+  border: 1px solid #dedede;
+  border-radius: 7px;
+  text-align: left;
+  border-spacing: 0px 20px;
+}
+

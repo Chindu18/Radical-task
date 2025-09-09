@@ -62,7 +62,7 @@ const Employee = () => {
         </div>
       </div>
 
-      <div>
+      <div className="table-wrapper">
         <table className='employee-table'>
           <thead>
             <tr>

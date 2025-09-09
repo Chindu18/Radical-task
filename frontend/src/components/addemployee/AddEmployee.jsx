@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./AddEmployee.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import img from '../../assests/img.png'
 
 const AddEmployee = () => {
   const navigate = useNavigate();
+
+  const [image,setimage]=useState('')
 
   const [formData, setFormData] = useState({
     employee_name: "",
@@ -59,19 +62,25 @@ const AddEmployee = () => {
 
       <div className="form-data">
         <div className="file-upload">
+          <label htmlFor="img"><img className="upload-img" src={image?URL.createObjectURL(image):img} alt="" /></label>
           <input
+          id="img"
             type="file"
             name="profile_url"
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                profile_url: e.target.files[0]?.name,
-              })
-            }
+            onChange={(e) => {
+          const file = e.target.files[0];
+          if (file) {
+            setimage(file); 
+            console.log(file)
+            setFormData({
+              ...formData,
+              profile_url: file, 
+            });
+          }
+        }}
+            hidden
           />
-          {formData.profile_url && (
-            <img src={formData.profile_url} alt="Preview" />
-          )}
+          
         </div>
 
         <form className="form" onSubmit={handleSubmit}>
